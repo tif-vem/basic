@@ -63,5 +63,60 @@ class BankAccount {
             console.log(' недостаточно средств или неверная суммаю');
         }
     }
-    
+    //приватный метод для получения баланса
+    #getBalance() {
+        return this.#balance;
+    }
 }
+
+const myAccount = new BankAccount(100);
+myAccount.deposit(50);
+myAccount.withdraw(30);
+//console.log(myAccount.#balance); //приватное свойство
+
+console.log('--- наследование---');
+
+class Dog extends Animal {
+    constructor(name, age, breed) {
+        //super- вызов конструтокра родительского класса
+        super(name, age)
+        this.breed = breed; // добавляем свое,новое свойство
+    }
+    //переопределение метода speak
+    speak() {
+        console.log(`${this.name} лает: gav-gav.`);
+    }
+    //можно вызывать и родительский метод внтури дочернего
+    displayInfo() {
+        super.displayInfo(); //parent
+        console.log(`порода: ${this.breed}`);
+    }
+}
+
+const newDog = new Dog ("reks", 7, "husky");
+newDog.displayInfo();//вызовет оба метода:родительский и дочерний.
+newDog.speak();
+
+//4. полиморфизм
+console.log("polymorfism");
+
+class Cat extends Animal {
+    //переопределим метод speak
+    speak() {
+        console.log(`${this.name} мяукает: Мяу`);
+    }
+}
+
+const myCat = new Cat("patsya", 2);
+
+//создадим массив из разных обьектов и вызовем один и тот же метод
+
+const animals = [myCat, newDog, new Animal("something", 1)];
+
+//проходим по массиву и вызываем один и тот же метод speak()
+//в зависимости от класса обьекта будет вызвана своя реализация этого метода
+
+animals.forEach(animal => {
+    animal.speak();
+})
+
